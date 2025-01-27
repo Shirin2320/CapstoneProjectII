@@ -6,8 +6,10 @@ First, run the server part:
 
 ```bash
 cd server
+docker compose up
 npm run dev
 ```
+You should be able to connect to the backend using localhost:3123
 
 Then launch the web part:
 
