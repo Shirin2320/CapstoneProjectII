@@ -10,4 +10,8 @@ for (const model of models) {
     model(sequelize);
 }
 
+sequelize.sync()
+    .then(() => console.log('All models were synchronized successfully.'))
+    .catch(err => console.log(err));
+
 module.exports = sequelize;
