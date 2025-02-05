@@ -22,6 +22,12 @@ export default class Dietary_Restrictions extends Model<Dietary_Restrictions> im
     name!: string;
 
     @Column({
+        type: DataType.INTEGER,
+        allowNull: false
+    })
+    ingredient_id!: number;
+
+    @Column({
         type: DataType.ARRAY(DataType.INTEGER),
         allowNull: true
     })
