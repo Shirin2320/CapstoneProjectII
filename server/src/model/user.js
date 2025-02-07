@@ -9,5 +9,19 @@ module.exports = (sequelize) => {
         weight: DataTypes.FLOAT,
         gender: DataTypes.STRING,
         goal: DataTypes.STRING,
+        dietary_restrictions: {
+            type: DataTypes.ARRAY(DataTypes.INTEGER),
+            reference: {
+                model: dietary_restrictions,
+                key: id
+            }
+        },
+        allergies: {
+            type: DataTypes.ARRAY(DataTypes.INTEGER),
+            reference: {
+                model: allergies,
+                key: id
+            }
+        }
     });
 };
