@@ -9,14 +9,14 @@ module.exports = (sequelize) => {
         weight: DataTypes.FLOAT,
         gender: DataTypes.STRING,
         goal: DataTypes.STRING,
-        dietary_restrictions: {
+        dietary_restrictions: { // References table holding the dietary restrictions to keep things clean
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             reference: {
                 model: dietary_restrictions,
                 key: id
             }
         },
-        allergies: {
+        allergies: { // References table holding the allergies to keep things clean
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             reference: {
                 model: allergies,
