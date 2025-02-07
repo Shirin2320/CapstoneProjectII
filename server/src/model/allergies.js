@@ -1,7 +1,8 @@
-const { Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const Ingredient = require('./ingredient');
 
-class Allergies extends Model {}
-Allergies.init({
+module.exports = (sequelize) => {
+    sequelize.define('allergies', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -17,15 +18,8 @@ Allergies.init({
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: false,
         references: {
-            model: ingredient,
-            key: id
+            model: Ingredient,
+            key: 'id'
         }
     }    
-},
-    
-{
-    sequelize,
-    modelName: 'allergies'
-})
-
-module.exports = Allergies
+})}

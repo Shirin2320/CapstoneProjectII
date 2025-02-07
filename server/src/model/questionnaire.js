@@ -1,7 +1,8 @@
-const { Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const Answer = require('./answers');
 
-class Questionnaire extends Model{}
-Questionnaire.init({
+module.exports = (sequelize) => {
+    sequelize.define('questionnaire', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -17,15 +18,8 @@ Questionnaire.init({
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: false,
         references: {
-            model: answer,
-            key: id
+            model: Answer,
+            key: 'id'
         }
     }
-},
-    
-{
-    sequelize,
-    modelName: 'questionnaire'
-})
-
-module.exports = Questionnaire
+})}

@@ -1,4 +1,6 @@
 const { DataTypes } = require('sequelize');
+const Allergies = require('./allergies');
+const Dietary_Restrictions = require('./dietary_restrictions');
 
 module.exports = (sequelize) => {
     sequelize.define('User', {
@@ -12,15 +14,15 @@ module.exports = (sequelize) => {
         dietary_restrictions: { // References table holding the dietary restrictions to keep things clean
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             reference: {
-                model: dietary_restrictions,
-                key: id
+                model: Dietary_Restrictions,
+                key: 'id'
             }
         },
         allergies: { // References table holding the allergies to keep things clean
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             reference: {
-                model: allergies,
-                key: id
+                model: Allergies,
+                key: 'id'
             }
         }
     });

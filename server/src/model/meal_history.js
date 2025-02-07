@@ -1,7 +1,9 @@
-const { Model, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
+const Recipe = require('./recipe');
+const user = require('./user');
 
-class Meal_History extends Model {}
-Meal_History.init({
+module.exports = (sequelize) => {
+    sequelize.define('meal_history', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,7 +15,7 @@ Meal_History.init({
         allowNull: false,
         references: {
             model: user,
-            key: id
+            key: 'id'
         }
     },
 
@@ -21,15 +23,8 @@ Meal_History.init({
         type: DataTypes.ARRAY(DataTypes.NUMBER),
         allowNull: true,
         references: {
-            model: recipe, 
-            key: id
+            model: Recipe, 
+            key: 'id'
         }
     }
-},
-    
-{
-    sequelize,
-    modelName: 'meal_history'
-})
-
-module.exports = Meal_History
+})}

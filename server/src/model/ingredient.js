@@ -1,8 +1,7 @@
-const { Model, DataTypes } = require('sequelize');
+const {  DataTypes } = require('sequelize');
 
-
-class Ingredient extends Model {}
-Ingredient.init({
+module.exports = (sequelize) => {
+    sequelize.define('ingredient', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -13,11 +12,4 @@ Ingredient.init({
         type: DataTypes.STRING,
         allowNull: false
     }
-},
-    
-{
-    sequelize,
-    modelName: 'ingredient'
-})
-
-module.exports = Ingredient
+})}
