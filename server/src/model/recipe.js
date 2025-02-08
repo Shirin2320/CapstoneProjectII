@@ -38,5 +38,11 @@ module.exports = (sequelize) => {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         references: "categories",
         referencesKey: 'id'
+    },
+    
+    ingredients: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
+        references: "ingredients",
+        referencesKey: "id"
     }
 })}
