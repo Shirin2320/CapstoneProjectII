@@ -5,11 +5,6 @@ const Meal_history = require('./meal_history');
 
 module.exports = (sequelize) => {
     sequelize.define('User', {
-        id: { 
-            type: DataTypes.INTEGER, 
-            primaryKey: true, 
-            autoIncrement: true
-        },
         email: DataTypes.STRING,
         username: DataTypes.STRING,
         full_name: DataTypes.STRING,
