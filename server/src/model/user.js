@@ -5,6 +5,11 @@ const Meal_history = require('./meal_history');
 
 module.exports = (sequelize) => {
     sequelize.define('User', {
+        id: { 
+            type: DataTypes.INTEGER, 
+            primaryKey: true, 
+            autoIncrement: true
+        },
         email: DataTypes.STRING,
         username: DataTypes.STRING,
         full_name: DataTypes.STRING,
@@ -12,7 +17,7 @@ module.exports = (sequelize) => {
         weight: DataTypes.FLOAT,
         gender: DataTypes.STRING,
         goal: DataTypes.STRING,
-        
+
         dietary_restrictions: { // References table holding the dietary restrictions to keep things clean
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             reference: {
