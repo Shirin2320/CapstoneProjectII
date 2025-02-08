@@ -3,15 +3,15 @@ const { Sequelize } = require('sequelize');
 const sequelize = new Sequelize('postgres://komedb:komepass7@localhost:5433/kome');
 
 const models = [
-    require('./model/user'),
-    require("./model/allergies"),
-    require("./model/answers"),
     require("./model/categories"),
+    require("./model/recipe"),
     require("./model/dietary_restrictions"),
     require("./model/ingredient"),
+    require("./model/allergies"),
+    require("./model/answers"),
     require("./model/meal_history"),
     require("./model/questionnaire"),
-    require("./model/recipe")
+    require('./model/user'),
 ];
 
 for (const model of models) {
