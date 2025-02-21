@@ -1,3 +1,4 @@
+const { get } = require('../app');
 const { models } = require('../database');
 const bcrypt = require('bcrypt');
 
@@ -27,7 +28,45 @@ const userController = {
             throw Error("User not found.");
         }
 
-        return comparePassword(user, password);
+        const valid = comparePassword(user, password);
+
+        if (!valid) {
+            throw Error("Invalid username or password.");
+        }
+
+        return user;
+    },
+    getUser: async (id) => {
+        const user = await models.User.findByPk(id);
+
+        if (!user) {
+            throw Error("User not found.");
+        }
+
+        return user;
+    },
+    updateUser: async (id, username, email, password) => {
+        const user = await models.User.findByPk(id);
+
+        if (!user) {
+            throw Error("User not found.");
+        }
+
+        if (username) {
+            user.username = username;
+        }
+
+        if (email) {
+            user.email = email;
+        }
+
+        if (password) {
+            user.password = bcrypt.hashSync(password, 10);
+        }
+
+        await user.save();
+
+        return user;
     },
 };
 
