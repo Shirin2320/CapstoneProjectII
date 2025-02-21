@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
-const Answer = require('./answers');
 
 module.exports = (sequelize) => {
-    sequelize.define('questionnaire', {
+    sequelize.define('Questionnaire', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -12,14 +11,5 @@ module.exports = (sequelize) => {
     question: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-
-    answer_ids: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-        allowNull: false,
-        references: {
-            model: Answer,
-            key: 'id'
-        }
     }
 })}

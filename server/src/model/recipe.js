@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
-const Categories = require('./categories');
 
 module.exports = (sequelize) => {
-    sequelize.define('recipes', {
+    sequelize.define('Recipe', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -28,21 +27,8 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: false
     },
-
     instructions: {
         type: DataTypes.STRING,
         allowNull: false
-    },
-    
-    categories: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-        references: "categories",
-        referencesKey: 'id'
-    },
-    
-    ingredients: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-        references: "ingredients",
-        referencesKey: "id"
     }
 })}

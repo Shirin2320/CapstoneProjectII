@@ -1,8 +1,7 @@
 const { DataTypes } = require('sequelize');
-const Categories = require('./categories');
 
 module.exports = (sequelize) => {
-    sequelize.define('answers', {
+    sequelize.define('Answers', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
@@ -12,14 +11,5 @@ module.exports = (sequelize) => {
     answer: {
         type: DataTypes.STRING,
         allowNull: false,
-    },
-
-    category_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: Categories,
-            key: 'id'
-        }
     }
 })}
