@@ -1,4 +1,3 @@
-const { get } = require('../app');
 const { models } = require('../database');
 const bcrypt = require('bcrypt');
 
