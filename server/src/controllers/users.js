@@ -79,21 +79,28 @@ const userController = {
 
             // if no allergies 
             if(!currentAllergies || currentAllergies.length == 0){
-                await allergies.forEach(allergy => {
-                    models.UserAllergies.create({ UserId: userId, AllergyId: allergy.id })
+                await allergies.forEach(async (allergy) => {
+                    await models.UserAllergies.create({ UserId: userId, AllergyId: allergy.id })
                     console.log("Allergy added")
                 });
                 return "Allergies updated"
             }
 
+            // for ease, allergies & currentAllergies becomes just ids 
+            const allergyIds = allergies.map(allergy => allergy.AllergyId)
             const currentAllergyIds = currentAllergies.map(allergy => allergy.AllergyId);
-            const newAllergies = allergies.filter(allergyId => !currentAllergyIds.includes(allergyId));
-            const oldAllergies = currentAllergyIds.filter(id => !allergies.includes(id));
+
+            // find where there are new ids in allergies 
+            const newAllergies = allergyIds.filter(id => !currentAllergyIds.includes(id));
+            
+            // find ids that exist in currentAllergies but not allergies
+            const oldAllergies = currentAllergyIds.filter(id => !allergyIds.includes(id));
             
             // Add new allergies
             if (newAllergies.length > 0){
-                await Promise.all(newAllergies.map(allergyId => {
-                models.UserAllergies.create({ UserId: userId, AllergyId: allergyId })
+                await Promise.all(newAllergies.map( async (id) => {
+                    await models.UserAllergies.create({ UserId: userId, AllergyId: id })
+                    console.log("Restriction added")
                 }))
             }
 
@@ -106,6 +113,53 @@ const userController = {
 
             console.log("Allergies Updated")
             return "Allergies updated"
+
+        } catch (err) {
+            console.log(err.message)
+            return err.message
+        }
+    },
+    updateDietaryRestrictions: async (userId, restrictions) => {
+        try {
+            // Check existing restrictions
+            const currentRestrictions = await models.UserDietaryRestrictions.findAll({ where: { id: userId }})
+
+            // if none
+            if(!currentRestrictions || currentRestrictions.length == 0){
+                await restrictions.forEach( async (restrictions) => {
+                    await models.UserDietaryRestrictions.create({ UserId: userId, DietaryRestrictionsId: restrictions.id })
+                    console.log("Added restriction")
+                })
+            }
+
+            // for ease, restrictions & currentRestrictions becomes just ids
+            const restrictionIds = restrictions.map(restriction => restriction.DietaryRestrictionsId)
+            const currentRestrictionsId = currentRestrictions.map(restriction => restriction.DietaryRestrictionsId)
+            
+            // get new restriction ids 
+            const newRestrictions = restrictionId.filter(id => !currentRestrictionsId.includes(id))
+            
+            // get restriction ids that no longer exist 
+            const oldRestrictions = currentRestrictionsId.filter(id => !restrictions.includes(id))
+
+            // Add new Restrictions
+            if (newRestrictions.length > 0) {
+                await Promise.all(newRestrictions.map(async (id) => {
+                    await models.UserDietaryRestrictions.create({ UserId: userId, DietaryRestrictionsId: id})
+                    console.log("Restriction added")
+                }))
+            }
+
+            // Delete old Restrictions
+            if (oldRestrictions.length > 0) {
+                await models.UserDietaryRestrictions.destroy({
+                    where: { UserId: userId, DietaryRestrictionsId: oldRestrictions }
+                })
+            }
+
+            console.log("Restrictions updated")
+            return "Dietary Restrictions updated"
+            
         } catch (err) {
             console.log(err.message)
             return err.message

@@ -64,4 +64,17 @@ router.put('/update/allergies', async (req, res) => {
     }
 })
 
+// Update Dietary Restrictions
+router.put('/update/dietaryRestrictions', async (req, res) => {
+    try{
+        const { id, dietaryRestrictions } = req.body
+
+        await userController.updateDietaryRestrictions(id, dietaryRestrictions)
+
+        res.status(204).json({message: "Sucessfully updated allergies."})
+    } catch(err) {
+        res.status(500).json({ message: err.message });
+    }
+})
+
 module.exports = router;
