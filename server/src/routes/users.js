@@ -51,4 +51,17 @@ router.post('/:id', async (req, res) => {
     }
 });
 
+// Update Allergies 
+router.put('/update/allergies', async (req, res) => {
+    try{
+        const { id, allergies } = req.body
+
+        await userController.updateAllergies(id, allergies)
+
+        res.status(204).json({message: "Sucessfully updated allergies."})
+    } catch(err) {
+        res.status(500).json({ message: err.message });
+    }
+})
+
 module.exports = router;

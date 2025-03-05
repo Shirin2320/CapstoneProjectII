@@ -72,6 +72,45 @@ const userController = {
 
         return user;
     },
+    updateAllergies: async (userId, allergies) => {
+        try {
+            // Check existing allergies 
+            const currentAllergies = await models.UserAllergies.findAll({ where: { UserId: userId }})
+
+            // if no allergies 
+            if(!currentAllergies || currentAllergies.length == 0){
+                await allergies.forEach(allergy => {
+                    models.UserAllergies.create({ UserId: userId, AllergyId: allergy.id })
+                    console.log("Allergy added")
+                });
+                return "Allergies updated"
+            }
+
+            const currentAllergyIds = currentAllergies.map(allergy => allergy.AllergyId);
+            const newAllergies = allergies.filter(allergyId => !currentAllergyIds.includes(allergyId));
+            const oldAllergies = currentAllergyIds.filter(id => !allergies.includes(id));
+            
+            // Add new allergies
+            if (newAllergies.length > 0){
+                await Promise.all(newAllergies.map(allergyId => {
+                models.UserAllergies.create({ UserId: userId, AllergyId: allergyId })
+                }))
+            }
+
+            // Delete old allergies 
+            if (oldAllergies.length > 0) {
+                await models.UserAllergies.destroy({
+                    where: { UserId: userId, AllergyId: oldAllergies }
+                });
+            }
+
+            console.log("Allergies Updated")
+            return "Allergies updated"
+        } catch (err) {
+            console.log(err.message)
+            return err.message
+        }
+    },
 };
 
 module.exports = userController;
