@@ -52,7 +52,12 @@ const userController = {
         }
 
         if (username) {
-            user.username = username;
+            const existingUser = await models.User.findOne({ where: { username } });
+            if(!existingUser){
+                user.username = username;
+            } else {
+                throw Error("Username alread taken.")
+            }
         }
 
         if (email) {
