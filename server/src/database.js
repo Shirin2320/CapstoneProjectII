@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-
+const populateDatabase = require('./populate')
 const sequelize = new Sequelize('postgres://komedb:komepass7@localhost:5433/kome');
 
 const models = [
@@ -46,7 +46,11 @@ MealHistory.belongsTo(User);
 
 
 sequelize.sync()
-    .then(() => console.log('All models were synchronized successfully.'))
+    .then(async () => { 
+        console.log('All models were synchronized successfully.')
+        await populateDatabase(sequelize.models)
+        console.log("Database populated")
+    })
     .catch(err => console.log(err));
 
 module.exports = sequelize;
