@@ -19,29 +19,29 @@ for (const model of models) {
 
 const { Allergies, Categories, DietaryRestrictions, Ingredient, MealHistory, Questionnaire, Recipe, User } = sequelize.models;
 
-Allergies.hasMany(Ingredient);
-Ingredient.belongsTo(Allergies);
+Allergies.belongsToMany(Ingredient, { through: 'AllergyIngredients' });
+Ingredient.belongsToMany(Allergies, { through: 'AllergyIngredients' });
 
 Questionnaire.belongsToMany(Categories, { through: 'QuestionCategory' });
 Categories.belongsToMany(Questionnaire, { through: 'QuestionCategory' });
 
-Recipe.belongsTo(Categories);
-Categories.hasMany(Recipe);
+Recipe.belongsToMany(Categories, { through: 'RecipeCategories' });
+Categories.belongsToMany(Recipe, { through: 'RecipeCategories' });
 
-Recipe.hasMany(Ingredient);
-Ingredient.belongsTo(Recipe);
+Recipe.belongsToMany(Ingredient, { through: 'RecipeIngredients' });
+Ingredient.belongsToMany(Recipe, { through: 'RecipeIngredients' });
 
 User.belongsToMany(Recipe, { through: 'UserRecipes' });
 Recipe.belongsToMany(User, { through: 'UserRecipes' });
 
-User.hasMany(Allergies);
-Allergies.belongsTo(User);
+User.belongsToMany(Allergy, { through: 'UserAllergies' });
+Allergy.belongsToMany(User, { through: 'UserAllergies' });
 
-User.hasMany(DietaryRestrictions);
-DietaryRestrictions.belongsTo(User);
+User.belongsToMany(DietaryRestrictions, { through: 'UserDietaryRestrictions' });
+DietaryRestrictions.belongsToMany(User, { through: 'UserDietaryRestrictions' });
 
-User.hasOne(MealHistory);
-MealHistory.belongsTo(User);
+User.belongsToMany(MealHistory, { through: 'UserMealHistory' });
+MealHistory.belongsToMany(User, { through: 'UserMealHistory' });
 
 
 sequelize.sync()
