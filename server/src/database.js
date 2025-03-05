@@ -18,13 +18,13 @@ for (const model of models) {
     model(sequelize);
 }
 
-const { Allergies, Answers, Categories, DietaryRestrictions, Ingredient, MealHistory, Questionnaire, Recipe, User } = sequelize.models;
+const { Allergies, Categories, DietaryRestrictions, Ingredient, MealHistory, Questionnaire, Recipe, User } = sequelize.models;
 
 Allergies.hasMany(Ingredient);
 Ingredient.belongsTo(Allergies);
 
-Answers.belongsTo(Questionnaire);
-Questionnaire.hasMany(Answers);
+Questionnaire.belongsToMany(Categories, { through: 'QuestionCategory' });
+Categories.belongsToMany(Questionnaire, { through: 'QuestionCategory' });
 
 Recipe.belongsTo(Categories);
 Categories.hasMany(Recipe);
