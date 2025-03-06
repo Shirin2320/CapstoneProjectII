@@ -6,5 +6,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-    }});
+    },
+    date: { 
+        type: DataTypes.DATE,
+        default: Date.now()
+    }
+});
 }
