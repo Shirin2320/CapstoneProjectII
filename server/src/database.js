@@ -22,6 +22,9 @@ const { Allergies, Categories, DietaryRestrictions, Ingredient, MealHistory, Que
 Allergies.hasMany(Ingredient);
 Ingredient.belongsTo(Allergies);
 
+DietaryRestrictions.belongsToMany(Categories, { through: 'DietaryRestrictionCategory' })
+Categories.belongsToMany(DietaryRestrictions, { through: 'DietaryRestrictionCategories'})
+
 Questionnaire.belongsToMany(Categories, { through: 'QuestionCategory' });
 Categories.belongsToMany(Questionnaire, { through: 'QuestionCategory' });
 
