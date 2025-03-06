@@ -40,11 +40,11 @@ Allergy.belongsToMany(User, { through: 'UserAllergies' });
 User.belongsToMany(DietaryRestrictions, { through: 'UserDietaryRestrictions' });
 DietaryRestrictions.belongsToMany(User, { through: 'UserDietaryRestrictions' });
 
-User.belongsToMany(MealHistory, { through: 'UserMealHistory' });
-MealHistory.belongsToMany(User, { through: 'UserMealHistory' });
+User.hasMany(MealHistory);
+MealHistory.belongsTo(User);
 
-MealHistory.belongsToMany(Recipe, { through: 'MealHistoryRecipe' });
-Recipe.belongsToMany(MealHistory, { through: 'MealHistoryRecipe' });
+Recipe.hasMany(MealHistory);
+MealHistory.belongsTo(Recipe);
 
 sequelize.sync()
     .then(async () => { 
