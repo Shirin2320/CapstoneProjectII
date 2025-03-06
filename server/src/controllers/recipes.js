@@ -16,7 +16,7 @@ const recipeController = {
         const recipe = await models.Recipe.findOne({recipeId});
         return await user.addRecipe(recipe);
     },
-    createRecipe: async (user, name, description, instructions, ingredients) => { // Create Recipe 
+    createRecipe: async (user, name, description, instructions, ingredients, categories, restrictions) => { // Create Recipe 
         try {
             // no duplicate name 
             // API call to check the other db we're using? 
@@ -29,11 +29,13 @@ const recipeController = {
             
             // find ingredients
             // API call to check other db we're using?
-            
+
+            // find categories & save 
+            // find restrictions 
+
             // Save to Recipe db 
             
             // Save connection to user 
-            // Save connection to ingredients 
 
             // return new link 
         } catch (err) {
