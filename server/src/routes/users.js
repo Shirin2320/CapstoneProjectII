@@ -51,32 +51,6 @@ router.post('/:id', async (req, res) => {
     }
 });
 
-// Update Allergies 
-router.put('/update/allergies', async (req, res) => {
-    try{
-        const { id, allergies } = req.body
-
-        await userController.updateAllergies(id, allergies)
-
-        res.status(204).json({message: "Sucessfully updated allergies."})
-    } catch(err) {
-        res.status(500).json({ message: err.message });
-    }
-})
-
-// Update Dietary Restrictions
-router.put('/update/dietaryRestrictions', async (req, res) => {
-    try{
-        const { id, dietaryRestrictions } = req.body
-
-        await userController.updateDietaryRestrictions(id, dietaryRestrictions)
-
-        res.status(204).json({message: "Sucessfully updated dietary restrictions."})
-    } catch(err) {
-        res.status(500).json({ message: err.message });
-    }
-})
-
 // Update Weight
 router.put('/update/weight', async (req, res) => {
     try{ 
@@ -90,13 +64,5 @@ router.put('/update/weight', async (req, res) => {
     }
 })
 
-// Add to MealHistory
-router.post('/update/mealHistory', async (req, res) => {
-    try{ 
-        res.status(204).json({message: "Sucessfully updated meal history."})
-    } catch(err) {
-        res.status(500).json({ message: err.message });
-    }
-})
 
 module.exports = router;

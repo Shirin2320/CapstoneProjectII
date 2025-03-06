@@ -19,8 +19,8 @@ for (const model of models) {
 
 const { Allergies, Categories, DietaryRestrictions, Ingredient, MealHistory, Questionnaire, Recipe, User } = sequelize.models;
 
-Allergies.belongsToMany(Ingredient, { through: 'AllergyIngredients' });
-Ingredient.belongsToMany(Allergies, { through: 'AllergyIngredients' });
+Allergies.hasMany(Ingredient);
+Ingredient.belongsTo(Allergies);
 
 Questionnaire.belongsToMany(Categories, { through: 'QuestionCategory' });
 Categories.belongsToMany(Questionnaire, { through: 'QuestionCategory' });
