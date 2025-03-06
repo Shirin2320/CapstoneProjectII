@@ -43,6 +43,8 @@ DietaryRestrictions.belongsToMany(User, { through: 'UserDietaryRestrictions' });
 User.belongsToMany(MealHistory, { through: 'UserMealHistory' });
 MealHistory.belongsToMany(User, { through: 'UserMealHistory' });
 
+MealHistory.belongsToMany(Recipe, { through: 'MealHistoryRecipe' });
+Recipe.belongsToMany(MealHistory, { through: 'MealHistoryRecipe' });
 
 sequelize.sync()
     .then(async () => { 
