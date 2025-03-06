@@ -2,22 +2,37 @@ const { models } = require('../database');
 
 const allergiesController = {
     getAllergies: async () => {
-        return await models.Allergies.findAll()
+        try {
+            return await models.Allergies.findAll()
+        } catch (err) {
+            console.log("Error getting allergies:", err.message)
+            throw new Error("Error getting allergies:", err.message)
+        }
     },
     getAllergy: async (id) => {        
-        return await models.Allergies.findByPk(id)
+        try {
+            return await models.Allergies.findByPk(id)
+        } catch (err) {
+            console.log("Error getting allergy:", err.message)
+            throw new Error("Error getting allergy:", err.message)
+        }
     },
     addAllergy: async (name) => {
-        // get all allergies 
-        const allergies = models.Allergies.findAll()
-    
-        // verify allergy doesn't already exist 
-        if((await allergies).includes(name)){
-            throw Error("Allergy already exists")
-        }
+        try {
+            // get all allergies 
+            const allergies = models.Allergies.findAll()
+        
+            // verify allergy doesn't already exist 
+            if((await allergies).includes(name)){
+                throw Error("Allergy already exists")
+            }
 
-        // save allergy 
-        await models.Allergies.create({ name: name })
+            // save allergy 
+            await models.Allergies.create({ name: name })
+        } catch (err) {
+            console.log("Error adding allergies:", err.message)
+            throw new Error("Error adding allergies:", err.message)
+        }
     },
     updateAllergies: async (userId, allergies) => {
         try {
@@ -32,8 +47,8 @@ const allergiesController = {
 
             console.log(`Added allergies to ${user.username}: ${allergies.name.join(", ")}`);
         } catch (err) {
-            console.log("Error adding allergies:", err.message)
-            throw new Error("Error adding allergies:", err.message)
+            console.log("Error updating allergies:", err.message)
+            throw new Error("Error updating allergies:", err.message)
         }
     },
 }
