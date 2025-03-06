@@ -24,10 +24,10 @@ router.get('/:id', async (req, res) => {
 })
 
 // Create new allergy
-router.post('/create', async (req, res) => {
+router.post('/create/:name', async (req, res) => {
     try {
-        await allergiesController.addAllergy(req.body.name)
-        
+        await allergiesController.addAllergy(req.params.name)
+
         res.status(201).json({message: "Sucessfully created allergy."})
     } catch(err) {
         res.status(500).json({ message: err.message });
