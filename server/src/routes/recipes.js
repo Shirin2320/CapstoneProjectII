@@ -47,4 +47,17 @@ router.post('/:id/addToUser/:userId', async (req, res) => {
     }
 });
 
+// Create recipe 
+router.post('/create', async (req, res) => {
+    try {
+        const { user, name, description, instructions, ingredients } = req.body
+
+        const recipe = await recipeController.createRecipe(user, name, description, instructions, ingredients)
+
+        res.status(201).send(recipe)
+    } catch(err) {
+        res.status(500).json({ message: err.message });
+    }
+})
+
 module.exports = router;
