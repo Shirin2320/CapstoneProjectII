@@ -89,6 +89,23 @@ const userController = {
             return err.message
         }
     },
+    updateGoal: async (userId, goal) => {
+        try {
+            // Find User
+            const user = await models.User.findByPk(userId)
+
+            if (!user) {
+                throw Error("User not found.")
+            }
+
+            user.goal = goal
+            await user.save()
+            
+        } catch (err) {
+            console.log(err.message)
+            return err.message
+        }
+    }
 };
 
 module.exports = userController;

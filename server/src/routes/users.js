@@ -64,5 +64,17 @@ router.put('/update/weight', async (req, res) => {
     }
 })
 
+// Update Goal
+router.put('/update/weight', async (req, res) => {
+    try{ 
+        const { id, goal } = req.body
+        
+        await  userController.updateGoal(id, goal) 
+
+        res.status(204).json({message: "Sucessfully updated goal."})
+    } catch(err) {
+        res.status(500).json({ message: err.message });
+    }
+})
 
 module.exports = router;
