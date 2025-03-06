@@ -71,7 +71,7 @@ router.put('/update/dietaryRestrictions', async (req, res) => {
 
         await userController.updateDietaryRestrictions(id, dietaryRestrictions)
 
-        res.status(204).json({message: "Sucessfully updated allergies."})
+        res.status(204).json({message: "Sucessfully updated dietary restrictions."})
     } catch(err) {
         res.status(500).json({ message: err.message });
     }
@@ -84,9 +84,19 @@ router.put('/update/weight', async (req, res) => {
         
         await  userController.updateWeight(id, weight) 
 
-        res.status(204).json({message: "Sucessfully updated allergies."})
+        res.status(204).json({message: "Sucessfully updated weight."})
     } catch(err) {
         res.status(500).json({ message: err.message });
     }
 })
+
+// Add to MealHistory
+router.post('/update/mealHistory', async (req, res) => {
+    try{ 
+        res.status(204).json({message: "Sucessfully updated meal history."})
+    } catch(err) {
+        res.status(500).json({ message: err.message });
+    }
+})
+
 module.exports = router;
