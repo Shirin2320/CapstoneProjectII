@@ -165,6 +165,24 @@ const userController = {
             return err.message
         }
     },
+    updateWeight: async (userId, weight) => {
+        try {
+            // Should be some frontend code that ensures valid weight
+            const user = await models.User.findByPk(userId)
+
+            if (!user) {
+                throw Error("User not found.")
+            }
+
+            user.weight = weight
+            await user.save()
+
+            return user
+        } catch (err) {
+            console.log(err.message)
+            return err.message
+        }
+    },
 };
 
 module.exports = userController;
