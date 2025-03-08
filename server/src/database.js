@@ -37,8 +37,8 @@ Ingredient.belongsToMany(Recipe, { through: 'RecipeIngredients' });
 User.belongsToMany(Recipe, { through: 'UserRecipes' });
 Recipe.belongsToMany(User, { through: 'UserRecipes' });
 
-User.belongsToMany(Allergy, { through: 'UserAllergies' });
-Allergy.belongsToMany(User, { through: 'UserAllergies' });
+User.belongsToMany(Allergies, { through: 'UserAllergies' });
+Allergies.belongsToMany(User, { through: 'UserAllergies' });
 
 User.belongsToMany(DietaryRestrictions, { through: 'UserDietaryRestrictions' });
 DietaryRestrictions.belongsToMany(User, { through: 'UserDietaryRestrictions' });

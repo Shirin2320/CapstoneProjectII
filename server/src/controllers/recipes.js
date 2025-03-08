@@ -8,15 +8,18 @@ const recipeController = {
         return await models.Recipe.findOne({id});
     },
     getUserRecipes: async (userId) => {
-        const user = await models.User.findOne({userId}, {include: models.Recipe});
-        return user;
+        const user = await models.User.findOne({
+            where: { id: userId },
+            include: models.Recipe
+        });
+        return user.Recipes;
     },
     addRecipeToUser: async (userId, recipeId) => {
         const user = await models.User.findOne({userId});
         const recipe = await models.Recipe.findOne({recipeId});
         return await user.addRecipe(recipe);
     },
-    createRecipe: async (user, name, description, instructions, ingredients, categories, restrictions) => { // Create Recipe 
+    createRecipe: async (name, description, instructions, ingredients, categories) => { // Create Recipe 
         try {
             // no duplicate name 
             // API call to check the other db we're using? 
@@ -34,10 +37,9 @@ const recipeController = {
             // find restrictions 
 
             // Save to Recipe db 
-            
-            // Save connection to user 
+            const recipe = await models.Recipe.create({name, description, instructions});
 
-            // return new link 
+            return recipe; 
         } catch (err) {
             console.log("Error creating recipe:", err.message)
             throw new Error("Error creating recipe:", err.message)

@@ -98,8 +98,8 @@ async function populateDatabase(models) {
             { question: "Want something high in Fiber or Protein?" }
         ]);
 
-        // Populate QuestionnaireCategory 
-        await models.QuestionnaireCategory.bulkCreate([
+        // Populate QuestionCategory 
+        await models.QuestionCategory.bulkCreate([
             { QuestionnaireId: questions[0].id, CategoryId: categories[9].id },
             { QuestionnaireId: questions[0].id, CategoryId: categories[25].id },
             { QuestionnaireId: questions[1].id, CategoryId: categories[16].id },
