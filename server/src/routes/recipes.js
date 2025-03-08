@@ -48,16 +48,16 @@ router.post('/:id/addToUser/:userId', async (req, res) => {
 });
 
 // Create recipe 
-router.post('/create', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
-        const { user, name, description, instructions, ingredients, categories, restrictions } = req.body
+        const { name, description, instructions, ingredients, categories } = req.body
 
-        const recipe = await recipeController.createRecipe(user, name, description, instructions, ingredients, categories, restrictions)
+        const recipe = await recipeController.createRecipe(name, description, instructions, ingredients, categories)
 
         res.status(201).send(recipe)
     } catch(err) {
         res.status(500).json({ message: err.message });
     }
-})
+});
 
 module.exports = router;

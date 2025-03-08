@@ -38,18 +38,30 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-router.post('/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const { username, email, password } = req.body;
+        const { username, email, full_name, weight, gender, goal } = req.body;
 
-        const user = await userController.updateUser(id, username, email, password);
+        const user = await userController.updateUser(id, username, email, full_name, weight, gender, goal);
 
-        res.status(200).json(user);
+        res.status(204).json(user);
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
 });
+
+router.put('/update/password', async (req, res) => {
+    try{ 
+        const { id, password } = req.body
+        
+        await  userController.updatePassword(id, password); 
+
+        res.status(204).json({message: "Sucessfully updated password."});
+    } catch(err) {
+        res.status(500).json({ message: err.message });
+    }
+})
 
 // Update Weight
 router.put('/update/weight', async (req, res) => {

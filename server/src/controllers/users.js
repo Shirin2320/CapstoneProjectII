@@ -44,7 +44,19 @@ const userController = {
 
         return user;
     },
-    updateUser: async (id, username, email, password) => {
+    updatePassword: async (id, password) => {
+        const user = await models.User.findByPk(id);
+
+        if (!user) {
+            throw Error("User not found.");
+        }
+
+        user.password = bcrypt.hashSync(password, 10);
+        await user.save();
+
+        return user;
+    },
+    updateUser: async (id, username, email, full_name, weight, gender, goal) => {
         const user = await models.User.findByPk(id);
 
         if (!user) {
@@ -53,7 +65,7 @@ const userController = {
 
         if (username) {
             const existingUser = await models.User.findOne({ where: { username } });
-            if(!existingUser){
+            if (!existingUser) {
                 user.username = username;
             } else {
                 throw Error("Username alread taken.")
@@ -63,9 +75,17 @@ const userController = {
         if (email) {
             user.email = email;
         }
-
-        if (password) {
-            user.password = bcrypt.hashSync(password, 10);
+        if (full_name) {
+            user.full_name = full_name;
+        }
+        if (weight) {
+            user.weight = weight;
+        }
+        if (gender) {
+            user.gender = gender;
+        }
+        if (goal) {
+            user.goal = goal;
         }
 
         await user.save();
