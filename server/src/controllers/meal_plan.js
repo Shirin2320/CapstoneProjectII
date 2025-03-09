@@ -44,6 +44,8 @@ const mealPlanController = {
             mealPlan.lunch = getRandomElement(validRecipes).id;
             mealPlan.dinner = getRandomElement(validRecipes).id;
 
+            user.addMealPlan(mealPlan);
+
             // save meal plan
             await mealPlan.save();
         } catch (err) {
