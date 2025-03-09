@@ -1,9 +1,13 @@
 const { models } = require('../database');
 
+function getRandomElement(array) {
+    return array[Math.floor(Math.random() * array.length)];
+}
+
 const mealPlanController = {
     getAllPlans: async () => {
         try {
-            return await models.MealPlan.findAll()
+            return await models.MealPlan.findAll();
         } catch (err) {
             console.log("Error getting meal plans: ", err.message)
             throw new Error("Error getting meal plans: ", err.message)
@@ -20,35 +24,25 @@ const mealPlanController = {
     generateMealPlan: async (userId) => {
         try {
             // get all allergies 
-            const user = models.User.findByPk(userId);
+            const user = await models.User.findByPk(userId);
 
             if (!user) {
                 throw Error("Requires a valid user");
             }
 
-            console.log(user);
-
-            const validRecipes = models.Recipe.findAll({
-                where: {
-                    [models.Sequelize.Op.not]: user.Allergies
-                }
-            });
-            console.log(validRecipes);
+            const validRecipes = await models.Recipe.findAll();
         
             // verify allergy doesn't already exist 
             if(validRecipes.length < 1){
                 throw Error("Could not find suitable recipes")
             }
 
-            const mealPlan = models.MealPlan.create({ userId: userId });
+            const mealPlan = await models.MealPlan.create({ userId: userId });
 
-            console.log(mealPlan);
-
-            mealPlan.breakfast = recipe[0];
-            mealPlan.lunch = recipe[0];
-            mealPlan.dinner = recipe[0];
-
-            console.log(mealPlan);
+            // random recipes are picked right now
+            mealPlan.breakfast = getRandomElement(validRecipes).id;
+            mealPlan.lunch = getRandomElement(validRecipes).id;
+            mealPlan.dinner = getRandomElement(validRecipes).id;
 
             // save meal plan
             await mealPlan.save();
