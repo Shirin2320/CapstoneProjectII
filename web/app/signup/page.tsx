@@ -7,13 +7,41 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { buildURL } from "@/lib/utils"
 
 export default function SignUpPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("Form submitted")
+    e.preventDefault();
+    console.log("Sign up form submitted");
+    
+    // React typecheck 
+    const target = e.target as typeof e.target & {
+      fullName: { value: string };
+      email: { value: string };
+      password: { value: string };
+    };
+    const fullName = target.fullName.value
+    const email = target.email.value;
+    const password = target.password.value;
+
+    fetch(buildURL("/api/user/signup"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password, fullName }),
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      router.push("/onboarding");
+    })
+    .catch((error) => console.error("Error during signup: ", error));
+
   }
 
   return (
