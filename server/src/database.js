@@ -8,6 +8,7 @@ const models = [
     require("./model/dietary_restrictions"),
     require("./model/ingredient"),
     require("./model/meal_history"),
+    require("./model/meal_plan"),
     require("./model/questionnaire"),
     require("./model/recipe"),
     require('./model/user'),
@@ -17,7 +18,7 @@ for (const model of models) {
     model(sequelize);
 }
 
-const { Allergies, Categories, DietaryRestrictions, Ingredient, MealHistory, Questionnaire, Recipe, User } = sequelize.models;
+const { Allergies, Categories, DietaryRestrictions, Ingredient, MealHistory, MealPlan, Questionnaire, Recipe, User } = sequelize.models;
 
 Allergies.hasMany(Ingredient);
 Ingredient.belongsTo(Allergies);
@@ -48,6 +49,13 @@ MealHistory.belongsTo(User);
 
 Recipe.hasMany(MealHistory);
 MealHistory.belongsTo(Recipe);
+
+User.hasMany(MealPlan);
+MealPlan.belongsTo(User);
+
+Recipe.hasMany(MealPlan, { foreignKey: 'breakfast'});
+Recipe.hasMany(MealPlan, { foreignKey: 'lunch' });
+Recipe.hasMany(MealPlan, { foreignKey: 'dinner' });
 
 sequelize.sync()
     .then(async () => { 
