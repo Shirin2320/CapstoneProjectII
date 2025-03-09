@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const userRoutes = require('./routes/users');
 const recipeRoutes = require('./routes/recipes');
 const questionRoutes = require('./routes/questionnaire')
@@ -8,6 +9,7 @@ const mealHistoryRoutes = require('./routes/meal_history')
 
 const app = express();
 
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
