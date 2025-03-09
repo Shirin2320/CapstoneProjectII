@@ -4,9 +4,9 @@ const userController = require('../controllers/users');
 
 router.post('/signup', async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        const { email, password, full_name } = req.body;
 		
-        const newUser = await userController.createUser(username, email, password);
+        const newUser = await userController.createUser(email, password, full_name);
 
         res.status(201).json({ message: "User created successfully.", id: newUser.id });
     } catch (err) {
@@ -41,9 +41,9 @@ router.get('/:id', async (req, res) => {
 router.put('/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const { username, email, full_name, weight, gender, goal } = req.body;
+        const { email, full_name, weight, gender, goal } = req.body;
 
-        const user = await userController.updateUser(id, username, email, full_name, weight, gender, goal);
+        const user = await userController.updateUser(id, email, full_name, weight, gender, goal);
 
         res.status(204).json(user);
     } catch (err) {

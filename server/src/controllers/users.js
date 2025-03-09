@@ -6,22 +6,22 @@ function comparePassword(user, password) {
 }
 
 const userController = {
-    createUser: async (username, email, password) => {
-        const existingUser = await models.User.findOne({ where: { username } });
+    createUser: async (email, password, full_name) => {
+        const existingUser = await models.User.findOne({ where: { email } });
 
         if (existingUser) {
-            return res.status(409).json({ message: "Username or email already exists." });
+            return res.status(409).json({ message: "User already exists." });
         }
 
 		const hash = bcrypt.hashSync(password, 10);
-        return await models.User.create({ username, email, password: hash });
+        return await models.User.create({ email, password: hash, full_name });
     },
-    loginUser: async (username, password) => {
-		if (!username || !password) {
+    loginUser: async (email, password) => {
+		if (!email || !password) {
 			throw Error("Username and password are required.");
 		}
 
-        const user = await models.User.findOne({ where: { username } });
+        const user = await models.User.findOne({ where: { email } });
 
         if (!user) {
             throw Error("User not found.");
@@ -56,25 +56,22 @@ const userController = {
 
         return user;
     },
-    updateUser: async (id, username, email, full_name, weight, gender, goal) => {
+    updateUser: async (id, email, full_name, weight, gender, goal) => {
         const user = await models.User.findByPk(id);
 
         if (!user) {
             throw Error("User not found.");
         }
 
-        if (username) {
-            const existingUser = await models.User.findOne({ where: { username } });
+        if (email) {
+            const existingUser = await models.User.findOne({ where: { email } });
             if (!existingUser) {
-                user.username = username;
+                user.email = email;
             } else {
-                throw Error("Username alread taken.")
+                throw Error("Email already exists.")
             }
         }
 
-        if (email) {
-            user.email = email;
-        }
         if (full_name) {
             user.full_name = full_name;
         }
